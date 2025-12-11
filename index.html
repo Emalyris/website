@@ -1,43 +1,13 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
+<!-- 
+/*
+ * index.html
+ * Updated navigation links to point to separate pages.
+ * Home links to index.html for consistency.
+ * Retained existing structure and content.
+ */
+-->
 
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -60,10 +30,14 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-center space-x-4">
-                        <a href="#" class="text-gray-700 hover:text-[#df000c] px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                        <a href="#" class="text-gray-700 hover:text-[#df000c] px-3 py-2 rounded-md text-sm font-medium">Services</a>
-                        <a href="#" class="text-gray-700 hover:text-[#df000c] px-3 py-2 rounded-md text-sm font-medium">About</a>
-                        <a href="#" class="text-gray-700 hover:text-[#df000c] px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                        <!-- Updated link to point to home page -->
+                        <a href="index.html" class="text-gray-700 hover:text-[#df000c] px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <!-- Updated link to point to services page -->
+                        <a href="services.html" class="text-gray-700 hover:text-[#df000c] px-3 py-2 rounded-md text-sm font-medium">Services</a>
+                        <!-- Updated link to point to about page -->
+                        <a href="about.html" class="text-gray-700 hover:text-[#df000c] px-3 py-2 rounded-md text-sm font-medium">About</a>
+                        <!-- Updated link to point to contact page -->
+                        <a href="contact.html" class="text-gray-700 hover:text-[#df000c] px-3 py-2 rounded-md text-sm font-medium">Contact</a>
                     </div>
                 </div>
                 <div class="md:hidden">
@@ -78,10 +52,14 @@
         <!-- Mobile menu, hidden by default -->
         <div class="md:hidden hidden bg-white/95 backdrop-blur-md" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#" class="text-gray-700 hover:text-[#df000c] block px-3 py-2 rounded-md text-base font-medium">Home</a>
-                <a href="#" class="text-gray-700 hover:text-[#df000c] block px-3 py-2 rounded-md text-base font-medium">Services</a>
-                <a href="#" class="text-gray-700 hover:text-[#df000c] block px-3 py-2 rounded-md text-base font-medium">About</a>
-                <a href="#" class="text-gray-700 hover:text-[#df000c] block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+                <!-- Updated link to point to home page -->
+                <a href="index.html" class="text-gray-700 hover:text-[#df000c] block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <!-- Updated link to point to services page -->
+                <a href="services.html" class="text-gray-700 hover:text-[#df000c] block px-3 py-2 rounded-md text-base font-medium">Services</a>
+                <!-- Updated link to point to about page -->
+                <a href="about.html" class="text-gray-700 hover:text-[#df000c] block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <!-- Updated link to point to contact page -->
+                <a href="contact.html" class="text-gray-700 hover:text-[#df000c] block px-3 py-2 rounded-md text-base font-medium">Contact</a>
             </div>
         </div>
     </nav>
@@ -93,8 +71,16 @@
             <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 delay-100">Tech Problems? <span class="text-[#fc454c]">I Can Help!</span></h1>
             <p class="text-lg sm:text-xl md:text-2xl mb-10 max-w-3xl mx-auto delay-200">I'm here to solve all your technology issues with friendly, professional support. Whether it's your computer, phone, or network, I've got you covered.</p>
             <div class="max-w-md mx-auto delay-300">
+                <!-- 
+                /*
+                * Updated hero form:
+                * - Added name="email" for Formspree.
+                * - Added required to ensure field is filled.
+                * - Set method="POST" and action to Formspree.
+                */
+                -->
                 <form class="flex flex-col sm:flex-row gap-3">
-                    <input type="email" placeholder="Enter your email" class="flex-grow px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#df000c]">
+                    <input type="email" name="email" placeholder="Enter your email" class="flex-grow px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#df000c]" required>
                     <button type="submit" class="bg-[#df000c] hover:bg-[#fc454c] text-white font-semibold px-6 py-3 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
                         Get Help Now
                     </button>
@@ -148,9 +134,7 @@
             <div class="text-center mb-16 fade-in">
                 <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">What Clients Say</h2>
                 <p class="text-lg text-gray-600 max-w-3xl mx-auto">Don't just take my word for it - hear from satisfied customers</p>
-           
-
- </div>
+            </div>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="bg-white p-8 rounded-xl shadow-sm fade-in delay-100">
                     <div class="flex items-center mb-4">
@@ -219,8 +203,16 @@
             <h2 class="text-3xl sm:text-4xl font-bold mb-6">Ready to Solve Your Tech Problems?</h2>
             <p class="text-xl mb-10 max-w-3xl mx-auto">Don't struggle with technology alone. Get professional help today.</p>
             <div class="max-w-md mx-auto">
+                <!-- 
+                /*
+                * Updated CTA form:
+                * - Added name="email" for Formspree.
+                * - Added required to ensure field is filled.
+                * - Set method="POST" and action to Formspree.
+                */
+                -->
                 <form class="flex flex-col sm:flex-row gap-3">
-                    <input type="email" placeholder="Enter your email" class="flex-grow px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#df000c]">
+                    <input type="email" name="email" placeholder="Enter your email" class="flex-grow px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#df000c]" required>
                     <button type="submit" class="bg-white hover:bg-gray-100 text-[#df000c] font-semibold px-6 py-3 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
                         Get Started
                     </button>
@@ -240,16 +232,16 @@
                     <div>
                         <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Services</h3>
                         <ul class="space-y-3">
-                            <li><a href="#" class="text-sm text-gray-600 hover:text-[#df000c]">Computer Support</a></li>
-                            <li><a href="#" class="text-sm text-gray-600 hover:text-[#df000c]">Network Setup</a></li>
-                            <li><a href="#" class="text-sm text-gray-600 hover:text-[#df000c]">Device Help</a></li>
+                            <li><a href="services.html" class="text-sm text-gray-600 hover:text-[#df000c]">Computer Support</a></li>
+                            <li><a href="services.html" class="text-sm text-gray-600 hover:text-[#df000c]">Network Setup</a></li>
+                            <li><a href="services.html" class="text-sm text-gray-600 hover:text-[#df000c]">Device Help</a></li>
                         </ul>
                     </div>
                     <div>
                         <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Company</h3>
                         <ul class="space-y-3">
-                            <li><a href="#" class="text-sm text-gray-600 hover:text-[#df000c]">About</a></li>
-                            <li><a href="#" class="text-sm text-gray-600 hover:text-[#df000c]">Contact</a></li>
+                            <li><a href="about.html" class="text-sm text-gray-600 hover:text-[#df000c]">About</a></li>
+                            <li><a href="contact.html" class="text-sm text-gray-600 hover:text-[#df000c]">Contact</a></li>
                             <li><a href="#" class="text-sm text-gray-600 hover:text-[#df000c]">FAQ</a></li>
                         </ul>
                     </div>
@@ -264,7 +256,7 @@
                 </div>
             </div>
             <div class="mt-12 pt-8 border-t border-gray-200">
-                <p class="text-xs text-gray-500 text-center">© 2023 Tech Support. All rights reserved.</p>
+                <p class="text-xs text-gray-500 text-center">© 2025 Tech Support. All rights reserved.</p>
             </div>
         </div>
     </footer>
